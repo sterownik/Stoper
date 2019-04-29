@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private boolean running;
+    private boolean wasRunning;
     private int mseconds=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +20,30 @@ public class MainActivity extends AppCompatActivity {
         {//jesli cos tam jest to biore te rzeczy z bundla
             running=savedInstanceState.getBoolean("running",running);
             mseconds = savedInstanceState.getInt("mseconds",mseconds);
+            wasRunning=savedInstanceState.getBoolean("wasRunning",wasRunning);
         }
         runTimer();
     }
+
+
+    protected void onPause() {
+
+        super.onPause();
+        wasRunning=running;
+
+        running=false;
+    }
+    protected void onResume() {
+
+        super.onResume();
+        if(wasRunning)
+        {
+            running=true;
+        }
+
+    }
+    
+
 
 
     public void onClickStart(View view)
