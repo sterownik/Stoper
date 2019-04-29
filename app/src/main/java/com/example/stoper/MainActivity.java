@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private boolean running;
-    private int seconds=0;
+    private int mseconds=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState!=null)//jesli to musialo sie wykonac to zamknalem aktywnosc i jest rozne od null czyli cos tam jest
         {//jesli cos tam jest to biore te rzeczy z bundla
             running=savedInstanceState.getBoolean("running",running);
-            seconds = savedInstanceState.getInt("seconds",seconds);
+            mseconds = savedInstanceState.getInt("mseconds",mseconds);
         }
         runTimer();
     }
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickReset(View view)
     {
         running = false;
-        seconds=0;
+        mseconds=0;
 
 
     }
@@ -48,18 +48,19 @@ public class MainActivity extends AppCompatActivity {
         handler.post(new Runnable() {//funkcja z tego wykonuje sie odrazu
             @Override
             public void run() {
-                int hours = seconds/3600;
-                int minutes = (seconds%3600)/60;
-                int secs = seconds%60;
-                String time = String.format("%d:%02d:%02d",hours,minutes,secs);
+                int hours = mseconds/36000;
+                int minutes = (mseconds/600)%60;
+                int secs = (mseconds/10)%60;
+                int ms = mseconds%10;
+                String time = String.format("%d:%02d:%02d:%d",hours,minutes,secs,ms);
 
                 timeview.setText(time);
                 if(running)
                 {
-                    seconds++;
+                    mseconds++;
                 }
 
-                handler.postDelayed(this,1000);//ile ma czekac 
+                handler.postDelayed(this,100);//ile ma czekac
             }
 
         });
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected  void onSaveInstanceState(Bundle savedInstanceState) {//jesli chcialem wylaczyc aktywnosc to zapisuja mi sie tu rzeczy
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt("seconds",seconds);
+        savedInstanceState.putInt("mseconds",mseconds);
         savedInstanceState.putBoolean("running",running);
     }
 }

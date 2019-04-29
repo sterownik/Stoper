@@ -18,7 +18,7 @@
         android:layout_marginBottom="42dp"
         android:text="@string/time_view"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="92sp"
+        android:textSize="80sp"
         app:layout_constraintBottom_toTopOf="@+id/start_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
